@@ -9,7 +9,12 @@
   /* Add space around the header */
   padding: 24px 12px;
   /* Ocean blue background for header */
-  background-color: #0077be; /* ocean blue */
+    background-color: #0077be; /* ocean blue */
+  width: 100vw;           /* Stretch header full width of viewport */
+  max-width: none;        /* Remove max-width restriction */
+  box-sizing: border-box; /* Include padding in width */
+  margin-left: calc(-50vw + 50%); /* Center header-content if body is centered */
+  margin-right: calc(-50vw + 50%); /* Center header-content if body is centered */
 }
 
 /* Style the Intel logo */
@@ -41,6 +46,14 @@
   max-width: 400px; /* Limit width for readability */
 }
 
+/* Limit width and center main content on wide screens */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 1500px;    /* Limit main content width */
+  margin: 0 auto;       /* Center main content horizontally */
+  background: #f4f8fb;  /* Optional: subtle background for contrast */
+}
+
 /* Milestone section styles */
 .milestone-section {
   /* Center the section and add space above */
@@ -48,40 +61,55 @@
   flex-direction: column;
   align-items: center;
   margin-top: 32px;
+  width: 100%;
+  max-width: 1200px;    /* Limit milestone section width */
+  margin: 0 auto;       /* Center milestone section */
 }
 
 /* Flexbox container for cards */
 .milestone-cards {
-  display: flex; /* Arrange cards in a row */
-  gap: 16px; /* Space between cards */
-  overflow-x: auto; /* Enable horizontal scrolling */
+  display: flex;           /* Place cards in a row */
+  flex-direction: row;     /* Ensure row direction */
+  gap: 32px;               /* Space between cards */
+  overflow-x: visible;
+  overflow-y: hidden;
   padding: 16px 0;
-  width: 90vw; /* Container width */
-  max-width: 1200px;
-  /* Show scrollbar for desktop users */
-  scrollbar-width: auto; /* Firefox: show scrollbar */
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  justify-content: flex-start;
+  scroll-snap-type: none;
+  scrollbar-width: auto;
 }
 .milestone-cards::-webkit-scrollbar {
-  height: 8px; /* Make scrollbar visible and easy to use */
+  height: 8px;
   background: #e0e7ef;
 }
 .milestone-cards::-webkit-scrollbar-thumb {
-  background: #0077be; /* Ocean blue scrollbar thumb */
+  background: #0077be;
   border-radius: 4px;
 }
 
 /* Individual milestone card styles */
 .milestone-card {
   position: relative;
-  background: #f4f8fb; /* Light background */
+  background: #2ac4eb;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  min-width: 220px; /* Minimum card width */
-  max-width: 250px; /* Maximum card width */
-  flex: 0 0 23%; /* Show about 4 cards per row */
-  padding: 16px; /* Restore padding here */
+  flex: 0 0 320px;      /* Fixed width for each card */
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  min-height: 340px;
+  padding: 16px;
   text-align: center;
   margin-bottom: 8px;
+  scroll-snap-align: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.milestone-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
 }
 
 /* Front side of card (shows by default) */
@@ -120,11 +148,14 @@
 
 /* Milestone card image styles */
 .milestone-img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover; /* Crop image to fit card */
+  width: 100%;         /* Image fills card width */
+  max-width: 100%;     /* Prevent overflow */
+  height: auto;        /* Keep original aspect ratio */
+  max-height: 240px;   /* Larger images for wide screens */
+  object-fit: contain; /* Show full image, keep ratio */
   border-radius: 4px;
   margin: 12px 0;
+  display: block;
 }
 
 /* Bold year and title */
@@ -171,41 +202,112 @@
     overflow-x: visible; /* No horizontal scroll needed */
     align-items: center;
     scrollbar-width: none; /* Firefox */
+    scroll-snap-type: none; /* Disable scroll snap on mobile */
   }
   .milestone-cards::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
   }
   .milestone-card {
-    min-width: 80vw;
-    max-width: 95vw;
-    flex: 1 1 100%; /* Take full width on mobile */
+    min-width: 90vw;
+    max-width: 98vw;
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    flex: 1 1 100%;
+    padding: 16px;
+    scroll-snap-align: none;
+    position: relative; /* Restore relative so both front and back can be layered */
+  }
+  .milestone-card-back {
+    position: absolute;   /* Restore absolute positioning for flip effect */
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    background: #295a89;
+    color: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 0;
+    display: block;
+    max-height: none;
+    overflow-y: visible;
+    transition: opacity 0.2s;
+  }
+  .milestone-card-front {
+    display: block;      /* Show front on mobile */
+  }
+  .milestone-card:hover .milestone-card-front {
+    opacity: 0;
+  }
+  .milestone-card:hover .milestone-card-back {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .milestone-card-back {
+    /* Make description readable and easy to scroll if long */
+    font-size: 1.1rem;         /* Slightly larger text for readability */
+    line-height: 1.6;          /* More space between lines */
+    padding: 30px;   /* More padding for comfort on mobile */
+    overflow-y: auto;          /* Allow scrolling if content is long */
+    max-height: 60vh;          /* Prevent card from getting too tall */
+    word-break: break-word;    /* Break long words if needed */
+  }
+}
+
+/* Make milestone description readable and fully visible on tablets */
+@media (max-width: 900px) and (min-width: 600px) {
+  .milestone-card-back {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    padding: 30px;
+    overflow-y: auto;
+    max-height: 70vh;      /* More height for tablets */
+    word-break: break-word;
+  }
+}
+
+/* Responsive: make images and cards fit mobile screens */
+@media (max-width: 700px) {
+  .milestone-img {
+    width: 100%;
+    height: auto;      /* Keep original aspect ratio on mobile */
+    max-width: 100%;
+    max-height: 400px; /* Limit height but keep ratio */
+    object-fit: contain;
+    display: block;
+  }
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 900px) {
+  .milestone-cards {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+    align-items: center;
+    scrollbar-width: none;
+  }
+  .milestone-card {
+    min-width: 90vw;
+    max-width: 98vw;
+    width: 100%;
+    min-height: 340px;
+    flex: 1 1 100%;
     padding: 16px;
   }
 }
 
-/* Responsive: make images and cards fit mobile screens */
-@media (max-width: 700px) {
-  .milestone-img {
-    height: 80px;
-  }
-}
-}
-    align-items: center;
-    scrollbar-width: none; /* Firefox */
-  }
-  .milestone-cards::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+/* Responsive design for larger mobile screens */
+@media (max-width: 1300px) {
+  .milestone-cards {
+    max-width: 100vw;
+    padding: 16px 0;
   }
   .milestone-card {
-    min-width: 80vw;
-    max-width: 95vw;
     flex: 1 1 100%;
-  }
-}
-
-/* Responsive: make images and cards fit mobile screens */
-@media (max-width: 700px) {
-  .milestone-img {
-    height: 80px;
+    min-width: 90vw;
+    max-width: 98vw;
+    width: 100%;
   }
 }
