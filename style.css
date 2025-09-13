@@ -1,1 +1,211 @@
 /* Add your CSS here */
+
+/* Center header content and add spacing */
+.header-content {
+  /* Center everything horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Add space around the header */
+  padding: 24px 12px;
+  /* Ocean blue background for header */
+  background-color: #0077be; /* ocean blue */
+}
+
+/* Style the Intel logo */
+.intel-logo {
+  /* Set a good size for desktop and mobile */
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px; /* Space below logo */
+}
+
+/* Center the heading and paragraph */
+.header-content h1,
+.header-content p {
+  color: white;
+  text-align: center;
+  margin: 0;
+}
+
+/* Add space below the heading */
+.header-content h1 {
+  margin-bottom: 12px;
+  font-size: 2rem; /* Larger text for heading */
+}
+
+/* Add space below the paragraph */
+.header-content p {
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  max-width: 400px; /* Limit width for readability */
+}
+
+/* Milestone section styles */
+.milestone-section {
+  /* Center the section and add space above */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 32px;
+}
+
+/* Flexbox container for cards */
+.milestone-cards {
+  display: flex; /* Arrange cards in a row */
+  gap: 16px; /* Space between cards */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  padding: 16px 0;
+  width: 90vw; /* Container width */
+  max-width: 1200px;
+  /* Show scrollbar for desktop users */
+  scrollbar-width: auto; /* Firefox: show scrollbar */
+}
+.milestone-cards::-webkit-scrollbar {
+  height: 8px; /* Make scrollbar visible and easy to use */
+  background: #e0e7ef;
+}
+.milestone-cards::-webkit-scrollbar-thumb {
+  background: #0077be; /* Ocean blue scrollbar thumb */
+  border-radius: 4px;
+}
+
+/* Individual milestone card styles */
+.milestone-card {
+  position: relative;
+  background: #f4f8fb; /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  min-width: 220px; /* Minimum card width */
+  max-width: 250px; /* Maximum card width */
+  flex: 0 0 23%; /* Show about 4 cards per row */
+  padding: 16px; /* Restore padding here */
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Front side of card (shows by default) */
+.milestone-card-front {
+  /* Only handle opacity transition */
+  transition: opacity 0.2s;
+}
+
+/* Back side of card (shows on hover) */
+.milestone-card-back {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #295a89; /* dark blue */
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 16px;
+  text-align: left; /* Make text align left */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  white-space: normal; /* Allow normal line breaks */
+  display: block;      /* Make sure text wraps normally */
+  font-size: 1rem;     /* Slightly larger for readability */
+  line-height: 1.5;    /* Add space between lines */
+}
+
+/* Show back side on hover */
+.milestone-card:hover .milestone-card-front {
+  opacity: 0;
+}
+.milestone-card:hover .milestone-card-back {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Milestone card image styles */
+.milestone-img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover; /* Crop image to fit card */
+  border-radius: 4px;
+  margin: 12px 0;
+}
+
+/* Bold year and title */
+.milestone-year {
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: #0077be;
+}
+.milestone-title {
+  font-weight: bold;
+  font-size: 1.05rem;
+  color: #222;
+}
+
+/* Tip text for scrolling */
+.milestone-scroll-tip {
+  text-align: center;
+  font-size: 1rem;
+  color: #0077be;
+  margin-top: 8px;
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 600px) {
+  .header-content {
+    padding: 16px 6px;
+  }
+  .intel-logo {
+    width: 80px; /* Smaller logo on mobile */
+    margin-bottom: 12px;
+  }
+  .header-content h1 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  .header-content p {
+    font-size: 1rem;
+    max-width: 90vw;
+  }
+  /* Responsive: stack cards vertically on mobile */
+  .milestone-cards {
+    flex-direction: column; /* Stack cards vertically */
+    gap: 12px;
+    overflow-x: visible; /* No horizontal scroll needed */
+    align-items: center;
+    scrollbar-width: none; /* Firefox */
+  }
+  .milestone-cards::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .milestone-card {
+    min-width: 80vw;
+    max-width: 95vw;
+    flex: 1 1 100%; /* Take full width on mobile */
+    padding: 16px;
+  }
+}
+
+/* Responsive: make images and cards fit mobile screens */
+@media (max-width: 700px) {
+  .milestone-img {
+    height: 80px;
+  }
+}
+}
+    align-items: center;
+    scrollbar-width: none; /* Firefox */
+  }
+  .milestone-cards::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  .milestone-card {
+    min-width: 80vw;
+    max-width: 95vw;
+    flex: 1 1 100%;
+  }
+}
+
+/* Responsive: make images and cards fit mobile screens */
+@media (max-width: 700px) {
+  .milestone-img {
+    height: 80px;
+  }
+}
